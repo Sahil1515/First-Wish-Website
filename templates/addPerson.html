@@ -1,0 +1,205 @@
+{% extends 'base.html'%} {% block head %}
+
+<script>
+    $(document).ready(function() {
+
+        // var date_input = $('input[name="date"]'); //our date input has the name "date"
+        // var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        // var options = {
+        //     format: 'mm/dd/yyyy',
+        //     container: container,
+        //     todayHighlight: true,
+        //     autoclose: true,
+        // };
+        // date_input.datepicker(options);'
+
+        $('#dataAboutPage2').click(function() {
+
+            let fname = $('#fname').val()
+            let lname = $('#lname').val()
+            let dob = $('#dob').val()
+            let relation = $('#relation').val()
+            let message = $('#message').val()
+
+            if (fname == '' || lname == '' || dob == '' || relation == '' || message == '')
+                alert("All fields are mandatory!")
+            else {
+                data = {
+                    'fname': fname,
+                    'lname': lname,
+                    'dob': dob,
+                    'relation': relation,
+                    'message': message,
+                    "csrfmiddlewaretoken": "{{csrf_token}}"
+                }
+                alert(data)
+                $.post('add_person_api', data, function(data, status) {
+                    if (status == 'success') {
+                        data = JSON.stringify(data)
+
+                        $('#fname').val('')
+                        $('#lname').val('')
+                        $('#dob').val('')
+                        $('#relation').val('')
+                        $('#message').val('')
+
+                        $("#added_successfully_message").html('Added Successfully!');
+
+                    } else {
+                        $("#added_successfully_message").html('Could not add successfully!');
+                        $("#added_successfully_message").removeClass('text-success')
+                        $("#added_successfully_message").removeClass('text-danger')
+
+                    }
+
+                })
+            }
+
+
+
+
+        })
+
+
+    })
+</script>
+
+<style>
+    @media screen and (max-width:700px) {
+        #form_id {
+            padding-top: 20%;
+        }
+        .text-size {
+            font-size: 13px;
+            color: wheat;
+            padding: -1px;
+        }
+        #heading {
+            font-size: 20px;
+        }
+    }
+    
+    @media screen and (min-width:700px) {
+        .text-size {
+            /* font-size: 15px; */
+            color: wheat;
+        }
+        #heading {
+            font-size: 30px;
+        }
+    }
+    
+    @media screen and (max-width:1092px) {
+        #form_id {
+            padding-top: 15%;
+        }
+    }
+    
+    @media screen and (min-width:1000px) {
+        #form_id {
+            padding-top: 10%;
+        }
+    }
+</style>
+
+{%endblock%} {% block content %}
+
+<body class="bg-light">
+
+    <img src="../static/addPersonImages/2.jpg" class="d-block w-100" style="position: absolute;" height="1000px" alt="...">
+
+
+    <div class="container " id="form_id" style="position: relative; height: 900px;">
+        <!-- <form action="addToDatabase" method="POST" id="prospects_form"> -->
+        <div class="form-row">
+
+            <div class="col d-flex justify-content-center">
+                <h2 class="text-success mb-2 w-50 pb-2" id="added_successfully_message" style="font-family: 'Times New Roman', Times, serif;"></h2>
+            </div>
+
+
+            <div class="col d-flex justify-content-center">
+                <input type="text" class="form-control mb-4 w-50 p-2" placeholder="First name" name="getFirstName" id="fname">
+            </div>
+            <div class="col d-flex justify-content-center">
+                <input type="text" class="form-control mb-4 w-50 p-2" placeholder="Last name" name="getLastName" id="lname">
+            </div>
+
+            <!-- Date row starts here -->
+            <div class="col d-flex justify-content-center">
+                <input type="date" class="form-control w-50 p-2" id="dob" name="date" placeholder="MM/DD/YYY" id="date" />
+            </div>
+            <!-- Date row ends here -->
+
+            <div class="col d-flex justify-content-center">
+                <p class="text-dark mb-2 w-50 pb-2" style="font-family: 'Times New Roman', Times, serif;">Keep year as current year if not sure!</p>
+            </div>
+
+
+            <div class="col d-flex justify-content-center">
+                <input type="text" class="form-control mb-4 w-50 p-2" placeholder="Relation with person" name="relation" id="relation">
+            </div>
+
+
+            <!-- <div class="col d-flex justify-content-center">
+                <p class="w-50">For better experience please select:</p>
+            </div> -->
+
+            <!-- Radio button starts-->
+            <!-- <div class="d-flex justify-content-center" style="margin-top: -15px;">
+                <div class="d-flex align-items-start flex-column bd-highlight w-50">
+                    <div class="bd-highlight ">
+                        <div class="form-check ">
+                            <input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked id="radio_btn">
+                            <label class="form-check-label" style="font-family:'Times New Roman', Times, serif;" for="flexRadioDefault1">
+                                Sure about date of birth.
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="bd-highlight">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" style="font-family: 'Times New Roman', Times, serif;" for="flexRadioDefault2">
+                                Not sure about date of birth.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- Radio button ends -->
+
+
+            <!-- <hr style="height: 2px; color:black;"> -->
+
+
+            <div class="d-flex justify-content-center mb-4">
+                <div class="w-50">
+                    <!-- <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                                Want to add advance birthday message.
+                            </label>
+                    </div> -->
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" placeholder="Enter some wishing message..." id="message"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col d-flex justify-content-center">
+                <button class="btn btn-success p-1 btn-sm" type="" id='dataAboutPage2' style="float: left;">Add
+                    Person</button>
+            </div>
+
+        </div>
+
+        <input type="text" name="dataAboutPage" id='dataAboutPage' value="1" hidden>
+        <!-- </form> -->
+    </div>
+
+
+</body>
+{% endblock%}
