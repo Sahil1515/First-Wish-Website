@@ -14,6 +14,8 @@
             <p class="text-primary">~~{{ person.relation }}</p>
             <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Get Gift</button>
             <button class="btn btn-success btn-sm m-2">Create Wish</button>
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/contact'">Plan Party/Gifts</button>
+
         </div>
         {% endfor %} {% if todayList|length == 0 %}
         <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">
@@ -32,8 +34,9 @@
             <p>{{ person.message }}</p>
             <p class="text-primary">~~{{ person.relation }}</p>
 
-            <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Get Gift</button>
-            <button class="btn btn-success btn-sm m-2">Create Wish</button>
+            <!-- <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Get Gift</button> -->
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/contact'">Plan Party/Gifts</button>
+
         </div>
         {% endfor %} {% if laterList|length == 0 %}
         <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">

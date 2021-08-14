@@ -15,9 +15,10 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-def send_mail(name, email,message_user):
+def send_mail(name,number, email,message_user):
     print("\n\n\n")
     print(name)
+    print(number)
     print(email)
     print(message_user)
     print("\n\n\n")
@@ -27,7 +28,7 @@ def send_mail(name, email,message_user):
     password = os.environ.get("SENDER_PASS")
 
     message = MIMEMultipart("alternative")
-    message["Subject"] = "VeriListo Feedback"
+    message["Subject"] = "First Wish Contact"
     message["From"] = sender_email
     message["To"] = 'sahilsaini51671@gmail.com'
 
@@ -37,13 +38,14 @@ def send_mail(name, email,message_user):
 
     <body>
         <p> Hey,</p>
-        <p>Feedback message:  {0} </p>
-        <p>Name: {1}</p>
-        <p>Email: {2}</p>
-        VeriListo
+        <p>Name: {0}</p>
+        <p>Email: {1}</p>
+        <p>Number: {2}</p>
+        <p>Message:  {3} </p>
+        First Wish
     </body>
     </html>
-    """.format(message_user, name, email)
+    """.format(name, email,number,message_user)
 
     part2 = MIMEText(html, "html")
 
@@ -60,12 +62,18 @@ def send_mail(name, email,message_user):
 
 def send_mail_by_user(request):
     print("send_mail_by_user\n")
-    name = request.POST['name']
-    email = request.POST['email']
-    message = request.POST['message']
+
+    print("\n\n\n")
+    print(request.POST)
+    print("\n\n\n")
+
+    name =         request.POST.get('name')
+    number =       request.POST.get('number')
+    email =        request.POST.get('email')
+    message_user = request.POST.get('msg')
 
     # mail code here
-    send_mail(name, email,message)
+    send_mail(name,number, email,message_user)
 
     print("mail sent!\n")
 

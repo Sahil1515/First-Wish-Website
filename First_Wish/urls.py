@@ -28,6 +28,8 @@ urlpatterns = [
     path('logout/', include('logout.urls')),
     path('password_reset/', include('password_reset.urls')),
     path('showAll/', include('showAll.urls')),
+    path('contact/', include('contact.urls')),
+
 
 
 ]
