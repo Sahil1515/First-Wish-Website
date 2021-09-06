@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+
+<body style="background-color: rgb(238,238,238); position: relative;">
+    <!-- Heading -->
+    <div style="min-height: 900px;">
+        <div class="container h-50 w-50 pt-3 mb-2 text-success">
+            <h4>Today's Stars</h4>
+        </div>
+
+        {% for person in todayList %}
+        <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">
+            <h5> {{ person.fname }} {{ person.lname }} </h5>
+            <p class="text-success">{{ person.message }}</p>
+            <p class="text-primary">~~{{ person.relation }}</p>
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Get Gift</button>
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Create Wish</button>
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/contact'">Plan Party/Gifts</button>
+
+        </div>
+        {% endfor %} {% if todayList|length == 0 %}
+        <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">
+            <p>Opps! No Birthday Today.</p>
+        </div>
+        {% endif %}
+
+        <!-- Heading -->
+        <div class="container h-50 w-50 pt-3 mb-2 text-primary">
+            <h4>Soon to shine</h4>
+        </div>
+
+        {% for person in laterList %}
+        <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">
+            <h5> {{ person.fname }} {{ person.lname }} <span class="text-success fs-6 fst-italic"> {{ person.days_left  }} days left! </span> </h5>
+            <p>{{ person.message }}</p>
+            <p class="text-primary">~~{{ person.relation }}</p>
+
+            <!-- <button class="btn btn-success btn-sm m-2" onclick="location.href='/gifts'">Get Gift</button> -->
+            <button class="btn btn-success btn-sm m-2" onclick="location.href='/contact'">Plan Party/Gifts</button>
+
+        </div>
+        {% endfor %} {% if laterList|length == 0 %}
+        <div class="container h-50 w-50 py-3 mb-5" style="background-color:rgb(255,255,255);">
+            <p>Opps! No Person Added.</p>
+            <button class="btn btn-success btn-sm" onclick="location.href='/addPerson'"> Add Person </button>
+        </div>
+        {% endif %}
+
+
+    </div>
+</body>
+
+{% endblock%}
